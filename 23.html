@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shri Pratibha College of Engineering</title>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+    body { line-height: 1.6; }
+
+    header {
+      background: #003366;
+      color: white;
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav ul { list-style: none; display: flex; }
+    nav ul li { margin-left: 20px; }
+    nav ul li a { color: white; text-decoration: none; }
+
+    .menu-btn { display: none; font-size: 24px; cursor: pointer; }
+
+    .hero {
+      background: #f4f6f9;
+      text-align: center;
+      padding: 50px 20px;
+    }
+
+    section { padding: 40px 20px; }
+    h2 { margin-bottom: 20px; color: #003366; }
+
+    .notice {
+      background: #f4f4f4;
+      padding: 10px;
+      margin-bottom: 10px;
+      animation: fadeIn 1s;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+    }
+
+    .gallery img {
+      width: 100%;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .gallery img:hover { transform: scale(1.05); }
+
+    .lightbox {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .lightbox img { max-width: 80%; }
+
+    form input, form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      background: #003366;
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .testimonial {
+      display: none;
+      background: #eee;
+      padding: 20px;
+      margin-bottom: 10px;
+    }
+
+    footer {
+      background: #003366;
+      color: white;
+      text-align: center;
+      padding: 10px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @media (max-width: 768px) {
+      nav ul {
+        display: none;
+        flex-direction: column;
+        background: #003366;
+      }
+      nav ul.show { display: flex; }
+      .menu-btn { display: block; }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>Shri  College</h1>
+  <div class="menu-btn" onclick="toggleMenu()">☰</div>
+  <nav>
+    <ul id="menu">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#departments">Departments</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<div class="hero" id="home">
+  <h2>Welcome to Shri  College of Engineering</h2>
+  <p>Empowering Students Through Quality Education</p>
+</div>
+
+<section>
+  <h2>Notice Board</h2>
+  <div id="noticeBoard"></div>
+</section>
+
+<section id="about">
+  <h2>About Us</h2>
+  <p>
+    Shri  College of Engineering provides quality technical education,
+    experienced faculty, and modern infrastructure to prepare students for the future.
+  </p>
+</section>
+
+<section id="departments">
+  <h2>Departments</h2>
+  <ul>
+    <li>Computer Science Engineering</li>
+    <li>Information Technology</li>
+    <li>Mechanical Engineering</li>
+    <li>Electronics & Communication</li>
+    <li>Civil Engineering</li>
+  </ul>
+</section>
+
+<section id="gallery">
+  <h2>Campus Gallery</h2>
+  <div class="gallery">
+    <img src="https://via.placeholder.com/300" onclick="openLightbox(this.src)">
+    <img src="https://via.placeholder.com/301" onclick="openLightbox(this.src)">
+    <img src="https://via.placeholder.com/302" onclick="openLightbox(this.src)">
+  </div>
+</section>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <img id="lightboxImg">
+</div>
+
+<section>
+  <h2>Testimonials</h2>
+  <div class="testimonial">"Best learning experience!" – Student A</div>
+  <div class="testimonial">"Supportive faculty and good campus." – Student B</div>
+</section>
+
+<section id="contact">
+  <h2>Contact Us</h2>
+  <form onsubmit="return validateForm()">
+    <input type="text" id="name" placeholder="Name">
+    <input type="email" id="email" placeholder="Email">
+    <textarea id="message" placeholder="Message"></textarea>
+    <button type="submit">Send</button>
+  </form>
+</section>
+
+<footer>
+  <p>© 2026 Shri College of Engineering</p>
+</footer>
+
+<script>
+function toggleMenu() {
+  document.getElementById("menu").classList.toggle("show");
+}
+
+const notices = [
+  "Admissions Open for 2026",
+  "Internal Exams from 10th June",
+  "Workshop on Web Development",
+  "Holiday on Friday"
+];
+
+const noticeBoard = document.getElementById("noticeBoard");
+notices.forEach(n => {
+  const div = document.createElement("div");
+  div.className = "notice";
+  div.innerText = n;
+  noticeBoard.appendChild(div);
+});
+
+function openLightbox(src) {
+  lightbox.style.display = "flex";
+  lightboxImg.src = src;
+}
+
+function closeLightbox() {
+  lightbox.style.display = "none";
+}
+
+function validateForm() {
+  if (name.value === "" || email.value === "") {
+    alert("Please fill all fields");
+    return false;
+  }
+  alert("Form submitted successfully!");
+  return true;
+}
+
+let index = 0;
+const testimonials = document.getElementsByClassName("testimonial");
+function showTestimonial() {
+  for (let i = 0; i < testimonials.length; i++) {
+    testimonials[i].style.display = "none";
+  }
+  testimonials[index].style.display = "block";
+  index = (index + 1) % testimonials.length;
+}
+showTestimonial();
+setInterval(showTestimonial, 3000);
+</script>
+
+</body>
+</html>
